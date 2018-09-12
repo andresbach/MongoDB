@@ -6,7 +6,7 @@ def get_db():
     return db
 
 def add_country(db):
-    db.countries.insert({"name" : "Canada"})
+    db.countries.insert({"name" : "Argentina"})
 
 def get_country(db):
     return db.countries.find_one()
