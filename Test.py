@@ -22,7 +22,8 @@ persona = {
 		"account" : "0x6f46cf5569aefa1acc1009290c8e043747172d89",
 		"birthday" : datetime.datetime(1995,3,20),
 		# "date": datetime.datetime(2016, 8, 11, 12, 30, 40, 330740)}
-        "incription" : datetime.datetime.utcnow()
+        "incription" : datetime.datetime.utcnow(),
+		'action_'+str(804): 5
         }
 
 # acceso directo a esa coleccion particular de la base de datos
@@ -55,4 +56,10 @@ nuevas_personas = [{
 					]
 
 # las ingreso con el insert de many
-mydb.posts.insert_many(new_posts)
+mydb.persons.insert_many(nuevas_personas)
+
+# esto es para que me entregue todo lo que esta en la coleccion. Poniendo 0 anula en el resultado
+def devuelve_todos():
+	for x in persons.find():
+	#for x in persons.find({},{"_id":0, "name": 1, "account": 1}):
+		print(x)
