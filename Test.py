@@ -4,6 +4,7 @@
 # base de dato > Colecciones > Documentos
 
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 import datetime
 
 # me conecta al servicio de mongo que por default esta ahi
@@ -63,3 +64,14 @@ def devuelve_todos():
 	for x in persons.find():
 	#for x in persons.find({},{"_id":0, "name": 1, "account": 1}):
 		print(x)
+# ObjectId necesito primero el modulo, luego lo puedo usar para buscar
+#id = persons.find_one({'_id': ObjectId("5b9abbdf7be477231f253c7d")})
+
+# parametro es el que busca el valor, luego aCambiar es lo que voy a modificar por newValue. E.g.
+# actualiza('account', '0x6f46cf5569aefa1acc1009290c8e043747172d89', 'action_804', persons.find_one({'account': '0x6f46cf5569aefa1acc1009290c8e043747172d89'})['action_804']+1)
+def actualiza(searchParam, searchVal, toChange, newValue):
+	#temp = persons.find_one({searchParam: searchVal})
+	#temp[toChange] = newValue
+	#persons.save(temp)
+	#persons.replace_one(temp)
+	persons.update_one({searchParam: searchVal},{'$set': {toChange: newValue}})
