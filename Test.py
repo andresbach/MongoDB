@@ -75,3 +75,6 @@ def actualiza(searchParam, searchVal, toChange, newValue):
 	#persons.save(temp)
 	#persons.replace_one(temp)
 	persons.update_one({searchParam: searchVal},{'$set': {toChange: newValue}})
+
+def getCollecciones():
+	mydb.collection_names()
