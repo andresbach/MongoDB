@@ -4,13 +4,14 @@
 # base de dato > Colecciones > Documentos
 
 from pymongo import MongoClient
+from pymongo import InsertOne, UpdateOne
 from bson.objectid import ObjectId
 import datetime
 
 # me conecta al servicio de mongo que por default esta ahi
 client = MongoClient('mongodb://localhost:27017/')
 # esto crea la base de datos que luego contenga a las colecciones
-mydb = client['pruebaDB']
+mydb = client['testingDB']
 
 # vacio las colecciones "persons" de mi base pruebaDB (por si la tenia antes usada)
 mydb.persons.drop()
@@ -41,7 +42,7 @@ print(mydb.list_collection_names())
 nuevas_personas = [{
 					"name": "Maria Juana",
 					"title" : "Bailarina",
-					"tags" : ["Clasica", "Contemporanea"],
+					"tags" : ["Clasica", "Contemporanea", "Ex"],
 					"account" : "0xfe9e8709d3215310075d67e3ed32a380ccf451c8",
 					"birthday" : datetime.datetime(1997,2,12),
 					"incription" : datetime.datetime.utcnow()
@@ -78,3 +79,21 @@ def actualiza(searchParam, searchVal, toChange, newValue):
 
 def getCollecciones():
 	mydb.collection_names()
+
+def operacionesBulk():
+	operaciones = [
+					InsertOne({
+								"name": "Manuel Carlos",
+								"title" : "Compositor",
+								"tags" : ["Clasica", "Opera"],
+								"account" : "0xsfdweryshjbkwituqruq67e3ed32a380ccf451c8",
+								"birthday" : datetime.datetime(1994,4,11),
+								"incription" : datetime.datetime.utcnow()
+								}),
+					UpdateOne({'name': 'Juan Pablo'},{'$set': {
+																'name': 'Juana Pabla',
+																'title': 'QA'
+																},
+													'$push': {'tags': 'Matlab'}})
+					]
+	persons.bulk_write(operaciones)
